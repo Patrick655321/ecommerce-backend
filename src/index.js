@@ -1,7 +1,10 @@
 const { response } = require("express");
 const express = require("express");
-const productRouter = require("./products/productRoutes")
-const cartRouter = require("./carts/cartRoutes")
+const productRouter = require("./controllers/products/productRoutes")
+const cartRouter = require("./controllers/carts/cartRoutes")
+const mongoose = require("mongoose")
+
+const { getProducts, getProductById, createProduct } = require("./controllers/products/productControllers")
 
 
 const app = express();
@@ -18,6 +21,11 @@ app.use(express.json());
 app.use("/products", productRouter)
 app.use("/cart", cartRouter)
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
     console.log("Server started.")
+    mongoose.set('strictQuery', false)
+    mongoose.connect("mongodb://127.0.0.1:27017/ecommerce", () => {
+        console.log("Database Connected!")
+    })
+    console.log('bananas')
 })

@@ -6,13 +6,18 @@ const { getProducts, getProductById, createProduct } = require("./productControl
 const productRouter = express.Router()
 
 
-productRouter.get("/", (req, res) => {
-    const products = getProducts()
+productRouter.get("/", async (req, res) => {
+    const products = await getProducts()
     res.json(products)
 })
 
-productRouter.get("/:productId", (req, res) => {
-    const product = getProductById(req.params.productId)
+productRouter.get("/", async (req, res) => {
+    const products = await getProducts()
+    res.json(products)
+})
+
+productRouter.get("/:productId", async (req, res) => {
+    const product = await getProductById(req.params.productId)
     if (!product) {
         res.status(404).json( {
             data: "Product doesn't exist"
@@ -21,8 +26,8 @@ productRouter.get("/:productId", (req, res) => {
     res.json(product)
 })
 
-productRouter.post("/", (req, res) => {
-    const product = createProduct({
+productRouter.post("/", async (req, res) => {
+    const product = await createProduct({
         title: req.body.title,
         description: req.body.description,
         price: req.body.price,
