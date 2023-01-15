@@ -36,8 +36,12 @@ async function getProductById(productId) {
 }
 
 async function createProduct(product) {
+    try {
     const newProduct = await Product.create(product)
     return newProduct
+    } catch(err) {
+        return err
+    }
 }
 
 module.exports = {

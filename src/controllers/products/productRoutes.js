@@ -34,6 +34,7 @@ productRouter.post("/", async (req, res) => {
         stock: req.body.stock
     })
     res.json(product)
+
 })
 
 module.exports = productRouter
