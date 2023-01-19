@@ -1,27 +1,6 @@
 const Product = require("../../models/product")
 const Cart = require("../../models/cart")
 
-const products = [
-    {
-        title: "Bag",
-        description: "Bag for all occasions",
-        price: 42,
-        stock: 10
-    },
-    {
-        title: "Ring",
-        description: "Wedding Ring",
-        price: 4200,
-        stock: 5
-    },
-    {
-        title: "Wallet",
-        description: "Wallet for all occasions",
-        price: 420,
-        stock: 15
-    }
-]
-
 async function getProducts() {
     const products = await Product.find()
     return products
@@ -45,9 +24,20 @@ async function createProduct(product) {
     }
 }
 
+async function deleteProduct(productId) {
+    try {
+        const deletedProduct = await Product.findByIdAndDelete(productId)
+        return deletedProduct
+    } catch(err) {
+        return err
+    }
+}
+
+
 module.exports = {
     getProducts,
     getProductById,
-    createProduct
+    createProduct,
+    deleteProduct
 }
 
