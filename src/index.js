@@ -2,6 +2,7 @@ const { response } = require("express");
 const express = require("express");
 const productRouter = require("./controllers/products/productRoutes")
 const cartRouter = require("./controllers/carts/cartRoutes")
+const userRouter = require("./controllers/users/userRoutes")
 const mongoose = require("mongoose")
 
 const { getProducts, getProductById, createProduct } = require("./controllers/products/productControllers")
@@ -20,6 +21,7 @@ app.get("/", (req, res) => {
 app.use(express.json());
 app.use("/products", productRouter)
 app.use("/cart", cartRouter)
+app.use("/user", userRouter)
 
 app.listen(PORT, async () => {
     console.log("Server started.")
