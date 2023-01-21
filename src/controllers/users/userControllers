@@ -61,6 +61,7 @@ async function loginAdmin(user) {
     const token = jwt.sign(payload, "secret")
     //return token
     return token
+}
 
 module.exports = {
     registerUser,
