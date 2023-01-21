@@ -1,6 +1,7 @@
 const { request } = require("express")
 const express = require("express")
 const { auth } = require("../../middlewares/auth")
+const { admin } = require("../../middlewares/admin")
 const { getProducts, getProductById, createProduct, deleteProduct } = require("./productControllers")
 
 const productRouter = express.Router()
@@ -37,7 +38,7 @@ productRouter.post("/", auth, async (req, res) => {
     res.json(product)
 })
 
-productRouter.delete("/:productId", async (req, res) => {
+productRouter.delete("/:productId", auth, admin, async (req, res) => {
     const product = await deleteProduct(req.params.productId)
     res.json(product)
 })
