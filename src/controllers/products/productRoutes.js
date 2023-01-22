@@ -1,7 +1,8 @@
 const { request } = require("express")
 const express = require("express")
-
-const { getProducts, getProductById, createProduct } = require("./productControllers")
+const { auth } = require("../../middlewares/auth")
+const { admin } = require("../../middlewares/admin")
+const { getProducts, getProductById, createProduct, deleteProduct } = require("./productControllers")
 
 const productRouter = express.Router()
 
@@ -26,7 +27,8 @@ productRouter.get("/:productId", async (req, res) => {
     res.json(product)
 })
 
-productRouter.post("/", async (req, res) => {
+productRouter.post("/", auth, async (req, res) => {
+    console.log(req.userId)
     const product = await createProduct({
         title: req.body.title,
         description: req.body.description,
@@ -34,7 +36,11 @@ productRouter.post("/", async (req, res) => {
         stock: req.body.stock
     })
     res.json(product)
+})
 
+productRouter.delete("/:productId", auth, admin, async (req, res) => {
+    const product = await deleteProduct(req.params.productId)
+    res.json(product)
 })
 
 module.exports = productRouter
